@@ -21,29 +21,29 @@ class City extends Component {
       showData: false,
     });
   };
-  submitHandler = (e) => {
+  submitHandler = async (e) => {
     e.preventDefault();
-     
+
     try{
       axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&q=${this.state.cityName}&format=json`)
       .then((response) => {
           let data = response.data[0];
       axios.get(`https://maps.locationiq.com/v3/staticmap?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&center=${this.state.lat},${this.state.long}&size=600x600&zoom=14&path=fillcolor:%2390EE90|weight:2|color:blue|enc:}woiBkrk}Mb@iKtC\`CEhBsD|C`)
       .then(resp=>{
-            
+            console.log(resp.config.url);
        this.setState({
         showData: true,
         cityName: data.display_name,
         lat: data.lat,
         long: data.lon,
-        img:resp.data
+        img:resp.config.url
       });
-  
+
       })
-         
-        
+
+
         });
-  
+
     }
     catch(e){
       this.setState({
@@ -51,7 +51,7 @@ class City extends Component {
       })
     }
     this.props.getError(this.state.error);
-    
+
 
   };
   render() {
@@ -71,7 +71,7 @@ class City extends Component {
         {this.state.showData && (
            <Card style={{ width: '18rem' ,marginTop:"20px"}}>
            <Card.Img variant="top" src={this.state.img} />
-          
+
            <Card.Body>
              <Card.Title>{this.state.cityName}</Card.Title>
 
@@ -84,6 +84,7 @@ class City extends Component {
            {/* <Card.Body>
 
            </Card.Body> */}
+
          </Card>
 
 
