@@ -11,7 +11,6 @@ class City extends Component {
       lat: "0.0",
       long: "0.0",
       showData: false,
-      img: "",
       error: "",
     };
   }
@@ -22,37 +21,28 @@ class City extends Component {
       showData: false,
     });
   };
+
   submitHandler = async (e) => {
     e.preventDefault();
 
     try {
-      axios
-        .get(
-          `https://eu1.locationiq.com/v1/search.php?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&q=${this.state.cityName}&format=json`
-        )
-        .then((response) => {
-          let data = response.data[0];
-          axios
-            .get(
-              `https://maps.locationiq.com/v3/staticmap?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&center=${this.state.lat},${this.state.long}&size=600x600&zoom=14&path=fillcolor:%2390EE90|weight:2|color:blue|enc:}woiBkrk}Mb@iKtC\`CEhBsD|C`
-            )
-            .then((resp) => {
-              this.setState({
-                showData: true,
-                cityName: data.display_name,
-                lat: data.lat,
-                long: data.lon,
-                img: resp.data,
-              });
-            });
-        });
-    } catch (error) {
-      console.error(error);
+      let cityLocation = await axios.get(
+        `https://eu1.locationiq.com/v1/search.php?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&q=${this.state.cityName}&format=json`
+      );
+      let data = await cityLocation.data[0];
       this.setState({
-        error: e,
+        showData: true,
+        cityName: data.display_name,
+        lat: data.lat,
+        long: data.lon,
+      });
+    } catch (err) {
+      this.setState({
+        error: "Error : you use some thing not valid",
       });
     }
   };
+
   render() {
     return (
       <div className="container">
@@ -76,10 +66,16 @@ class City extends Component {
             explore
           </Button>
         </Form>
+        {!this.state.showData && (
+          <h1 style={{ fontSize: "30px", color: "red" }}>{this.state.error}</h1>
+        )}
         {this.state.showData && (
           <Card style={{ width: "18rem", marginTop: "20px" }}>
-            <Card.Img variant="top" src={this.state.img} />
-             {console.log(this.state.img)}
+            <Card.Img
+              variant="top"
+              src={`https://maps.locationiq.com/v3/staticmap?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&center=${this.state.lat},${this.state.long}&size=600x600&zoom=14&path=fillcolor:%2390EE90|weight:2|color:blue|enc:}woiBkrk}Mb@iKtC\`CEhBsD|C`}
+            />
+
             <Card.Body>
               <Card.Title>{this.state.cityName}</Card.Title>
             </Card.Body>
@@ -92,7 +88,7 @@ class City extends Component {
            </Card.Body> */}
           </Card>
         )}
-        <h1>{this.setState.error}</h1>
+
         <PrintError />
       </div>
     );
