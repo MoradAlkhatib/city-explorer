@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+// import axios from "axios";
 import {InputGroup,Button,FormControl} from "react-bootstrap"
 class Weather extends Component {
  constructor(props){
@@ -19,21 +19,23 @@ class Weather extends Component {
       
   submitHandler = async (e) => {
     e.preventDefault();
-    try {
-        let cityLocation = await axios.get(
-          `localhost:8000/weather?lat=48.86&lon=2.35&searchQuery=${this.state.name}`
-        );
-        let data = await cityLocation.data[0];
-        this.setState({
-            name:this.state.name,
-            showData:true,
-        })
-      } catch (err) {
-        this.setState({
-          error: "Error : you use some thing not valid",
-        });
-      }
+    // try {
+    //      await axios.get(
+    //       `localhost:8000/weather?lat=48.86&lon=2.35&searchQuery=${this.state.name}`
+    //     ).then(response=>{
 
+    //     }); 
+        
+    //   } catch (err) {
+    //     this.setState({
+    //       error: "Error : you use some thing not valid",
+    //     });
+    //   }
+    
+      this.setState({
+        name:this.state.name,
+        showData:true,
+    })
 
      
   
