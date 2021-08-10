@@ -1,23 +1,19 @@
 import './App.css';
-
 import React, { Component } from 'react'
 import City from './component/City'
+import Weather from './component/Weather';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Errorx from './component/Errorx';
 class App extends Component {
-   cityError=(error)=>{
-    
-   console.log(error);
-  }
+
   
   render() {
     return (
-      <>
-        <City getError={this.cityError}/>
-        <Errorx />
-      </>
+      <div style={{display:"flex" ,justifyContent:"10% 1fr"}}>
+        <City />
+        <Weather />
+      </div>
     )
   }
 }
-
+//style={{display:"flex"}}
 export default App

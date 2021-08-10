@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Form, Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
-import PrintError from "./PrintError";
 
 class City extends Component {
   constructor(props) {
