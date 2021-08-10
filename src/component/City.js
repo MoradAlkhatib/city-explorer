@@ -87,6 +87,8 @@ class City extends Component {
            </Card.Body> */}
           </Card>
         )}
+
+        <PrintError />
       </div>
     );
   }
