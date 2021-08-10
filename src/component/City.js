@@ -88,7 +88,6 @@ class City extends Component {
           </Card>
         )}
 
-        <PrintError />
       </div>
     );
   }
