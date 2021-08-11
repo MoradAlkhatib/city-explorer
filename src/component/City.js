@@ -42,7 +42,7 @@ class City extends Component {
       });
     }
 
-    axios.get(`http://localhost:8000/weather?q=${this.state.cityName.split(',')[0]}`).then(resp=>{
+    axios.get(`https://city-explorer-ashrf.herokuapp.com/weather?q=${this.state.cityName.split(',')[0]}`).then(resp=>{
             console.log(resp)
             this.setState({resp:resp.data})
 
