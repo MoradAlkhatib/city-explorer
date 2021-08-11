@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Form, Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import Forcast from "./Forcast";
+import Movies from "./Movies";
 
 class City extends Component {
   constructor(props) {
@@ -11,6 +13,10 @@ class City extends Component {
       long: "0.0",
       showData: false,
       error: "",
+      resp: [],
+      movieData: [],
+      errorWeather: "",
+      weatherError: false,
     };
   }
 
@@ -18,6 +24,7 @@ class City extends Component {
     this.setState({
       cityName: e.target.value,
       showData: false,
+      weatherError:false,
     });
   };
 
@@ -31,6 +38,7 @@ class City extends Component {
       let data = await cityLocation.data[0];
       this.setState({
         showData: true,
+
         cityName: data.display_name,
         lat: data.lat,
         long: data.lon,
@@ -40,6 +48,33 @@ class City extends Component {
         error: "Error : you use some thing not valid",
       });
     }
+
+    axios
+      .get(
+        `https://city-explorer-ashrf.herokuapp.com/weather?q=${
+          this.state.cityName.split(",")[0]
+        }`
+      )
+      .then((resp) => {
+        console.log(resp);
+        this.setState({ resp: resp.data,
+          // weatherError:false
+        });
+      })
+      .catch((e) => {
+        console.log("error");
+        this.setState({
+          errorWeather:
+            "you can know the weather only in seattle ,paris and amman",
+          weatherError: true,
+        });
+      });
+    axios
+      .get(`https://city-explorer-ashrf.herokuapp.com/movie`)
+      .then((resp) => {
+        console.log(resp);
+        this.setState({ movieData: resp.data });
+      });
   };
 
   render() {
@@ -66,8 +101,19 @@ class City extends Component {
           </Button>
         </Form>
         {!this.state.showData && (
-          <h1 style={{ fontSize: "30px", color: "red" }}>{this.state.error}</h1>
+          <div>
+            <h1 style={{ fontSize: "20px", color: "red" }}>
+              {this.state.error}
+            </h1>
+          </div>
         )}
+
+        {this.state.weatherError && (
+          <h1 style={{ fontSize: "10px", color: "blue" }}>
+            {this.state.errorWeather}
+          </h1>
+        )}
+
         {this.state.showData && (
           <Card style={{ width: "18rem", marginTop: "20px" }}>
             <Card.Img
@@ -88,6 +134,8 @@ class City extends Component {
           </Card>
         )}
 
+        {this.state.showData && <Forcast data={this.state.resp} />}
+        {this.state.showData && <Movies movieData={this.state.movieData} />}
       </div>
     );
   }
