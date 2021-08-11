@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Form, Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
-
+import Forcast from './Forcast';
 class City extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +11,7 @@ class City extends Component {
       long: "0.0",
       showData: false,
       error: "",
+      resp:[],
     };
   }
 
@@ -40,6 +41,12 @@ class City extends Component {
         error: "Error : you use some thing not valid",
       });
     }
+
+    axios.get(`http://localhost:8000/weather?q=${this.state.cityName.split(',')[0]}`).then(resp=>{
+            console.log(resp)
+            this.setState({resp:resp.data})
+
+    })
   };
 
   render() {
@@ -86,8 +93,9 @@ class City extends Component {
 
            </Card.Body> */}
           </Card>
-        )}
 
+        )}
+            {this.state.showData &&  <Forcast data={this.state.resp}/>}
       </div>
     );
   }
