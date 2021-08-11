@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Form, Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import Forcast from './Forcast';
+import Movies from './Movies';
+
 class City extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +14,7 @@ class City extends Component {
       showData: false,
       error: "",
       resp:[],
+      movieData:[]
     };
   }
 
@@ -47,6 +50,11 @@ class City extends Component {
             this.setState({resp:resp.data})
 
     })
+    axios.get(`https://city-explorer-ashrf.herokuapp.com/movie`).then(resp=>{
+      console.log(resp)
+      this.setState({movieData:resp.data})
+
+})
   };
 
   render() {
@@ -96,6 +104,7 @@ class City extends Component {
 
         )}
             {this.state.showData &&  <Forcast data={this.state.resp}/>}
+            {this.state.showData &&  <Movies movieData={this.state.movieData}/>}
       </div>
     );
   }
