@@ -6,7 +6,6 @@ export class Forcast extends Component {
       <div>
 
         {this.props.data.map((item) => {
-            {console.log(item)}
           return (
             <div>
               <p>{item.date}</p>
