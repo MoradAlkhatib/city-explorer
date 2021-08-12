@@ -39,7 +39,7 @@ class City extends Component {
       this.setState({
         showData: true,
 
-        cityName: data.display_name,
+
         lat: data.lat,
         long: data.lon,
       });
@@ -51,9 +51,7 @@ class City extends Component {
 
     axios
       .get(
-        `https://city-explorer-ashrf.herokuapp.com/weather?q=${
-          this.state.cityName.split(",")[0]
-        }`
+        `https://city-explorer-ashrf.herokuapp.com/weather?city=${this.state.cityName}`
       )
       .then((resp) => {
         console.log(resp);
@@ -70,7 +68,7 @@ class City extends Component {
         });
       });
     axios
-      .get(`https://city-explorer-ashrf.herokuapp.com/movie`)
+      .get(`https://city-explorer-ashrf.herokuapp.com/movie?query=${this.state.cityName}`)
       .then((resp) => {
         console.log(resp);
         this.setState({ movieData: resp.data });
