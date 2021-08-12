@@ -1,3 +1,16 @@
+## 
+
+A question within the context of today’s lab assignment?
+display the map immediatly after submittion 
+
+An observation about the lab assignment, or related ‘Ah-hah!’ moment?
+place the resp of the map image directly inside the src of the image 
+
+How long you spent working on this assignment.
+it took us about 6 hours 
+
+
+
 # city-explorer
 
 # Project Name  city explorer
