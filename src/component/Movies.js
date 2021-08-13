@@ -1,22 +1,30 @@
-
 import React, { Component } from "react";
-
+import { Carousel } from "react-bootstrap";
+import movieImage from "../image/movie.png";
 export class Movies extends Component {
   render() {
     return (
-      <div>
-         {this.props.movieData.map((item) => {
+      <>
+    <h1 className='headerTextH1'>Movies Of {this.props.nameA}</h1>
+      <Carousel className="containerMovie">
+        {this.props.movieData.map((item) => {
+          console.log(typeof item.imgUrl);
           return (
-            <div>
-              <p>{item.title}</p>
-              <p>{item.overview}</p>
-              <img src={item.imgUrl} alt=''/>
-            </div>
-
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={item.imgUrl.includes("jpg") ? item.imgUrl : movieImage}
+                alt="First slide"
+              />
+              <Carousel.Caption className="textCarousel">
+                <h3>{item.title}</h3>
+                <p>{item.overview}</p>
+              </Carousel.Caption>
+            </Carousel.Item>
           );
         })}
-
-      </div>
+      </Carousel>
+      </>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Form, Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Form, Button, Card, ListGroup, ListGroupItem ,Container,Row,Col} from "react-bootstrap";
 import Forcast from "./Forcast";
 import Movies from "./Movies";
 
@@ -24,7 +24,7 @@ class City extends Component {
     this.setState({
       cityName: e.target.value,
       showData: false,
-      weatherError:false,
+      weatherError: false,
     });
   };
 
@@ -38,7 +38,6 @@ class City extends Component {
       let data = await cityLocation.data[0];
       this.setState({
         showData: true,
-
 
         lat: data.lat,
         long: data.lon,
@@ -54,8 +53,9 @@ class City extends Component {
         `https://city-explorer-ashrf.herokuapp.com/weather?city=${this.state.cityName}`
       )
       .then((resp) => {
-        console.log(resp);
-        this.setState({ resp: resp.data,
+        console.log(resp.data.data);
+        this.setState({
+          resp: resp.data.data,
           // weatherError:false
         });
       })
@@ -68,72 +68,82 @@ class City extends Component {
         });
       });
     axios
-      .get(`https://city-explorer-ashrf.herokuapp.com/movie?query=${this.state.cityName}`)
+      .get(
+        `https://city-explorer-ashrf.herokuapp.com/movie?query=${this.state.cityName}`
+      )
       .then((resp) => {
         console.log(resp);
-        this.setState({ movieData: resp.data });
+        this.setState({ movieData: resp.data.data });
       });
   };
 
   render() {
     return (
       <div className="container">
-        <Form
-          onSubmit={(e) => this.submitHandler(e)}
-          style={{ display: "flex" }}
-        >
-          <Form.Control
-            style={{ width: "30%" }}
-            type="text"
-            placeholder="City"
-            onChange={(e) => this.handlerCity(e)}
-          />
+        <Container fluid="md">
+          <Row>
+            <Col>
+              <Form
+                onSubmit={(e) => this.submitHandler(e)}
+                style={{ display: "flex" }}
+              >
+                <Form.Control
+                  style={{ width: "30%" }}
+                  type="text"
+                  placeholder="City"
+                  onChange={(e) => this.handlerCity(e)}
+                />
 
-          <Button
-            variant="primary"
-            type="submit"
-            size="sm"
-            style={{ marginLeft: "10px" }}
-          >
-            explore
-          </Button>
-        </Form>
-        {!this.state.showData && (
-          <div>
-            <h1 style={{ fontSize: "20px", color: "red" }}>
-              {this.state.error}
-            </h1>
-          </div>
-        )}
+                <Button
+                  variant="primary"
+                  type="submit"
+                  size="sm"
+                  style={{ marginLeft: "10px" }}
+                >
+                  explore
+                </Button>
+              </Form>
+              {!this.state.showData && (
+                <div>
+                  <h1 style={{ fontSize: "20px", color: "red" }}>
+                    {this.state.error}
+                  </h1>
+                </div>
+              )}
 
-        {this.state.weatherError && (
-          <h1 style={{ fontSize: "10px", color: "blue" }}>
-            {this.state.errorWeather}
-          </h1>
-        )}
+              {this.state.weatherError && (
+                <h1 style={{ fontSize: "10px", color: "blue" }}>
+                  {this.state.errorWeather}
+                </h1>
+              )}
 
-        {this.state.showData && (
-          <Card style={{ width: "18rem", marginTop: "20px" }}>
-            <Card.Img
-              variant="top"
-              src={`https://maps.locationiq.com/v3/staticmap?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&center=${this.state.lat},${this.state.long}&size=600x600&zoom=14&path=fillcolor:%2390EE90|weight:2|color:blue|enc:}woiBkrk}Mb@iKtC\`CEhBsD|C`}
-            />
+              {this.state.showData && (
+                <Card style={{ width: "18rem", marginTop: "20px" }}>
+                  <Card.Img
+                    variant="top"
+                    src={`https://maps.locationiq.com/v3/staticmap?key=pk.f7162d9d9da6a0d03a35e52f15d974c8&center=${this.state.lat},${this.state.long}&size=600x600&zoom=14&path=fillcolor:%2390EE90|weight:2|color:blue|enc:}woiBkrk}Mb@iKtC\`CEhBsD|C`}
+                  />
 
-            <Card.Body>
-              <Card.Title>{this.state.cityName}</Card.Title>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroupItem>lat: {this.state.lat}</ListGroupItem>
-              <ListGroupItem>lon: {this.state.long}</ListGroupItem>
-            </ListGroup>
-            {/* <Card.Body>
+                  <Card.Body>
+                    <Card.Title>{this.state.cityName}</Card.Title>
+                  </Card.Body>
+                  <ListGroup className="list-group-flush">
+                    <ListGroupItem>lat: {this.state.lat}</ListGroupItem>
+                    <ListGroupItem>lon: {this.state.long}</ListGroupItem>
+                  </ListGroup>
+                  {/* <Card.Body>
 
            </Card.Body> */}
-          </Card>
-        )}
-
-        {this.state.showData && <Forcast data={this.state.resp} />}
-        {this.state.showData && <Movies movieData={this.state.movieData} />}
+                </Card>
+              )}
+            </Col>
+            <Col xs={9}>
+              {" "}
+              {this.state.showData && <Forcast data={this.state.resp} name={this.state.cityName}/>}{" "}
+            </Col>
+          </Row>
+        </Container>
+        {this.state.showData && <Movies movieData={this.state.movieData} nameA={this.state.cityName} />}
       </div>
     );
   }
