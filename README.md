@@ -89,6 +89,27 @@ Finish time: 4:00
 
 Actual time needed to complete: 15 min
 
+## Name of feature: use ipi for westher snd snother ine for moive snd display a data 
+
+Estimate of time needed to complete:2 hours
+
+Start time: 2:40
+
+Finish time: 5:00
+
+Actual time needed to complete: 2 hour and 20 min 
+
+
+## Name of feature: reafavtoring code use mvc model
+
+Estimate of time needed to complete:30 min
+
+Start time: 5:20
+
+Finish time: 5:40
+
+Actual time needed to complete: 20 min
+
 ![image](api.png)
 
 ///////End//////
