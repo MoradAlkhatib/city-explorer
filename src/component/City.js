@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Form, Button, Card, ListGroup, ListGroupItem ,Container,Row,Col} from "react-bootstrap";
-import Forcast from "./Forcast";
+import Weather from "./WeatherDay";
 import Movies from "./Movies";
 
 class City extends Component {
@@ -139,7 +139,7 @@ class City extends Component {
             </Col>
             <Col xs={9}>
               {" "}
-              {this.state.showData && <Forcast data={this.state.resp} name={this.state.cityName}/>}{" "}
+              {this.state.showData && <Weather data={this.state.resp} name={this.state.cityName}/>}{" "}
             </Col>
           </Row>
         </Container>
